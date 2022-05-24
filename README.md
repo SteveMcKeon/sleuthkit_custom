@@ -3,7 +3,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/8f7ljj8s2lh5sqfv?svg=true)](https://ci.appveyor.com/project/bcarrier/sleuthkit)
 
 # [The Sleuth Kit](http://www.sleuthkit.org/sleuthkit)
-
+# Stephen McKeon's version with HRFS functionality
 ## INTRODUCTION
 The Sleuth Kit is an open source forensic toolkit for analyzing
 Microsoft and UNIX file systems and disks.  The Sleuth Kit enables
