@@ -4095,7 +4095,8 @@ ntfs_inode_walk(TSK_FS_INFO * fs, TSK_INUM_T start_inum,
             ((tsk_getu16(fs->endian, mft->flags) &
                 NTFS_MFT_INUSE) ? TSK_FS_META_FLAG_ALLOC :
             TSK_FS_META_FLAG_UNALLOC);
-
+        if ((flags & myflags) != myflags)
+            continue;
         /* If we want only orphans, then check if this
          * inode is in the seen list
          * */
@@ -4124,6 +4125,7 @@ ntfs_inode_walk(TSK_FS_INFO * fs, TSK_INUM_T start_inum,
         myflags |=
             (fs_file->meta->flags & (TSK_FS_META_FLAG_USED |
                 TSK_FS_META_FLAG_UNUSED));
+        // tsk_fprintf(stdout, "mftnum: %" PRIuINUM ", flags: %d, myflags: %d\n", mftnum, flags, myflags);
         if ((flags & myflags) != myflags)
             continue;
 

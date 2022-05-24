@@ -142,7 +142,8 @@ tsk_fs_open_img_decrypt(TSK_IMG_INFO * a_img_info, TSK_OFF_T a_offset,
         { "HFS",      hfs_open,     TSK_FS_TYPE_HFS_DETECT     },
 #endif
         { "ISO9660",  iso9660_open, TSK_FS_TYPE_ISO9660_DETECT },
-        { "APFS",     apfs_open_auto_detect,    TSK_FS_TYPE_APFS_DETECT }
+        { "APFS",     apfs_open_auto_detect,    TSK_FS_TYPE_APFS_DETECT },
+        { "HRFS",     hrfs_open,    TSK_FS_TYPE_HRFS_DETECT    }
     };
 
     if (a_img_info == NULL) {
@@ -215,6 +216,9 @@ tsk_fs_open_img_decrypt(TSK_IMG_INFO * a_img_info, TSK_OFF_T a_offset,
     }
     else if (TSK_FS_TYPE_ISISO9660(a_ftype)) {
         return iso9660_open(a_img_info, a_offset, a_ftype, 0);
+    }
+    else if (TSK_FS_TYPE_ISHRFS(a_ftype)) {
+        return hrfs_open(a_img_info, a_offset, a_ftype, 0);
     }
     else if (TSK_FS_TYPE_ISRAW(a_ftype)) {
         return rawfs_open(a_img_info, a_offset);

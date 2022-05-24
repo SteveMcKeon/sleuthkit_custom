@@ -56,7 +56,7 @@ dos_get_desc(uint8_t ptype)
         snprintf(str, DESC_LEN, "DOS Extended (0x05)");
         break;
     case 0x07:
-        snprintf(str, DESC_LEN, "NTFS / exFAT (0x07)");
+        snprintf(str, DESC_LEN, "NTFS / exFAT / HRFS (0x07)");
         break;
     case 0x08:
         snprintf(str, DESC_LEN, "AIX Boot (0x08)");
@@ -884,14 +884,14 @@ dos_load_prim_table(TSK_VS_INFO * vs, uint8_t test)
         return 1;
     }
 
-    /* Because FAT and NTFS use the same magic - check for a
+    /* Because FAT and NTFS and HRFS use the same magic - check for a
      * standard MS OEM name and sizes.  Not a great check, but we can't
      * really test the table entries.
      */
     if (test) {
         if (tsk_verbose)
             tsk_fprintf(stderr,
-                "dos_load_prim_table: Testing FAT/NTFS conditions\n");
+                "dos_load_prim_table: Testing FAT/NTFS/HRFS conditions\n");
 
         if (strncmp("MSDOS", sect->oemname, 5) == 0) {
             tsk_error_reset();
@@ -937,6 +937,22 @@ dos_load_prim_table(TSK_VS_INFO * vs, uint8_t test)
             free(sect_buf);
             return 1;
         }
+        else {
+	    /* Read the last block to find the OEM name */
+            tsk_vs_read_block(vs, (max_addr - 1), sect_buf, vs->block_size);
+	    if (strncmp("HRFS", sect->oemname, 4) == 0) {
+                tsk_error_reset();
+                tsk_error_set_errno(TSK_ERR_VS_MAGIC);
+                tsk_error_set_errstr
+                    ("dos_load_prim_table: HRFS OEM name exists");
+                if (tsk_verbose)
+                    tsk_fprintf(stderr,
+                        "dos_load_prim_table: HRFS OEM name exists\n");
+                //free(sect_buf);
+                //return 1; //We know it's HRFS so don't return error.
+            }
+            tsk_vs_read_block(vs, DOS_PART_SOFFSET, sect_buf, vs->block_size);
+	}
     }
 
     /* Add an entry of 1 sector for the table  to the internal structure */
@@ -955,6 +971,14 @@ dos_load_prim_table(TSK_VS_INFO * vs, uint8_t test)
     /* Cycle through the partition table */
     for (i = 0; i < 4; i++) {
         dos_part *part = &sect->ptable[i];
+        
+        if(i == 0 && tsk_verbose){
+            tsk_fprintf(stderr, "vs->endian (Lit 1 Big 2): %d\n", vs->endian);
+            tsk_fprintf(stderr, "part->start_sec0 %d\n", part->start_sec[0]);
+            tsk_fprintf(stderr, "part->start_sec1 %d\n", part->start_sec[1]);
+            tsk_fprintf(stderr, "part->start_sec2 %d\n", part->start_sec[2]);
+            tsk_fprintf(stderr, "part->start_sec3 %d\n", part->start_sec[3]);
+        }
 
         /* We currently ignore CHS */
         uint32_t part_start = tsk_getu32(vs->endian, part->start_sec);

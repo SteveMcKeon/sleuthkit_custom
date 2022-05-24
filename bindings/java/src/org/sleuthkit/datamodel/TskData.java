@@ -462,6 +462,8 @@ public class TskData {
 		TSK_FS_TYPE_YAFFS2_DETECT(0x00004000, bundle.getString("TskData.tskFsTypeEnum.YAFFS2autoDetect")), ///< YAFFS2 auto detection
 		TSK_FS_TYPE_APFS(0x00010000, "APFS"), ///< APFS file system
 		TSK_FS_TYPE_APFS_DETECT(0x00010000, bundle.getString("TskData.tskFsTypeEnum.APFSautoDetect")), ///< APFS auto detection
+		TSK_FS_TYPE_HRFS(0x00020000, "HRFS"), ///< HRFS file system
+		TSK_FS_TYPE_HRFS_DETECT(0x00020000, bundle.getString("TskData.tskFsTypeEnum.HRFSautoDetect")), ///< HRFS auto detection
 		TSK_FS_TYPE_UNSUPP(0xffffffff, bundle.getString("TskData.tskFsTypeEnum.unsupported"));        ///< Unsupported file system
 
 		private int value;

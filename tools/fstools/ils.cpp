@@ -227,6 +227,7 @@ main(int argc, char **argv1)
             break;
         case _TSK_T('z'):
             flags |= TSK_FS_META_FLAG_UNUSED;
+            flags &= ~TSK_FS_META_FLAG_USED;
             break;
         case _TSK_T('Z'):
             flags |= TSK_FS_META_FLAG_USED;

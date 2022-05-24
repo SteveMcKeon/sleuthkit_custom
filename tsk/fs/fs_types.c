@@ -64,6 +64,7 @@ static FS_TYPES fs_type_table[] = {
     {"hfsp", TSK_FS_TYPE_HFS, "HFS+"},
     {"hfsl", TSK_FS_TYPE_HFS_LEGACY, "HFS (Legacy)"},
 #endif
+    {"hrfs", TSK_FS_TYPE_HRFS, "HRFS"}, // HRFS == HRFS_DETECT 
     {0,0,""},
 };
 

@@ -41,6 +41,7 @@ unix_make_data_run_direct(TSK_FS_INFO * fs, TSK_FS_ATTR * fs_attr,
     size_t i;
     size_t fs_blen;             // how big is each "block" (in fragments)
 
+    if (tsk_verbose) tsk_fprintf(stderr, "%s: block 0x%" PRIxDADDR "\n", "hrfs_make_data_run_direct", addrs[0]);
     if (addr_len == 0) {
         return 0;
     }
@@ -287,6 +288,7 @@ tsk_fs_unix_make_data_run(TSK_FS_FILE * fs_file)
     }
 
     length = roundup(fs_meta->size, fs->block_size);
+    if(tsk_verbose) tsk_fprintf(stderr, "File length before reading: %d.\n", length);
 
     if ((fs_attr =
             tsk_fs_attrlist_getnew(fs_meta->attr,
@@ -312,6 +314,7 @@ tsk_fs_unix_make_data_run(TSK_FS_FILE * fs_file)
         return 1;
     }
     length -= read_b;
+    if(tsk_verbose) tsk_fprintf(stderr, "File length remaining: %d.\n", length);
 
     /* if there is still data left, read the indirect */
     if (length > 0) {

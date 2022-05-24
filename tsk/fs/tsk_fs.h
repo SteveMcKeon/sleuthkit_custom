@@ -820,6 +820,8 @@ extern "C" {
         TSK_FS_TYPE_HFS_LEGACY= 0x00008000,   ///< HFS file system
         TSK_FS_TYPE_APFS = 0x00010000, ///< APFS file system
         TSK_FS_TYPE_APFS_DETECT = 0x00010000, ///< APFS auto detection
+        TSK_FS_TYPE_HRFS = 0x00020000, ///< HRFS file system
+        TSK_FS_TYPE_HRFS_DETECT = 0x00020000, ///< HRFS auto detection
         TSK_FS_TYPE_UNSUPP = 0xffffffff,        ///< Unsupported file system
     };
     /* NOTE: Update bindings/java/src/org/sleuthkit/datamodel/TskData.java
@@ -902,6 +904,13 @@ extern "C" {
     * is for an APFS "file system". */
 #define TSK_FS_TYPE_ISAPFS(ftype) \
     (((ftype) & TSK_FS_TYPE_APFS_DETECT)?1:0)
+
+    /**
+    * \ingroup fslib
+    * Macro that takes a file system type and returns 1 if the type
+    * is for an HRFS "file system". */
+#define TSK_FS_TYPE_ISHRFS(ftype) \
+    (((ftype) & TSK_FS_TYPE_HRFS_DETECT)?1:0)
 
 
     /**

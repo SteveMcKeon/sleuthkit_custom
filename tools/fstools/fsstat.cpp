@@ -172,7 +172,6 @@ main(int argc, char **argv1)
         tsk_fprintf(stderr, "Missing image name\n");
         usage();
     }
-
     if ((img =
             tsk_img_open(argc - OPTIND, &argv[OPTIND], imgtype,
                 ssize)) == NULL) {
@@ -203,7 +202,6 @@ main(int argc, char **argv1)
             img->close(img);
             exit(1);
         }
-
         img = pool->get_img_info(pool, pvol_block);
         if ((fs = tsk_fs_open_img_decrypt(img, imgaddr * img->sector_size, fstype, password)) == NULL) {
             tsk_error_print(stderr);
@@ -217,7 +215,7 @@ main(int argc, char **argv1)
     if (type) {
         tsk_printf("%s\n", tsk_fs_type_toname(fs->ftype));
     }
-    else {
+    else {        
         if (fs->fsstat(fs, stdout)) {
             tsk_error_print(stderr);
             fs->close(fs);
