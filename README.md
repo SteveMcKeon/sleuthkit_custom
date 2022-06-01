@@ -4,6 +4,9 @@
 
 # [The Sleuth Kit](http://www.sleuthkit.org/sleuthkit)
 # Stephen McKeon's version with HRFS functionality
+
+I have submitted a paper to IEEE for publishing - once that process is complete I'll add a more fulsome explanation of this repo, it's purpose, and why I went about creating it. 
+
 ## INTRODUCTION
 The Sleuth Kit is an open source forensic toolkit for analyzing
 Microsoft and UNIX file systems and disks.  The Sleuth Kit enables
